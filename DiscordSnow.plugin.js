@@ -1,7 +1,9 @@
 /**
  * @name DiscordSnow
- * @version 1.0.0
+ * @version 1.1.0
  * @authorLink https://twitter.com/VampyreKittie85
+ * @source https://github.com/SudosCode/BD-Plugins/blob/main/DiscordSnow.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/SudosCode/BD-Plugins/main/DiscordSnow.plugin.js
  */
 
 var z = 8;
@@ -45,7 +47,7 @@ function snowPls() {
 		}
 		var angle=0;
 		function moveFlakes(){
-			//angle+=0.01;
+			//angle+=0.01; //i turned this off, it makes the snow sway back and forth.
 			for(var i=0;i<mf;i++){
 				var f=flakes[i];
 				f.y+=Math.pow(f.d,2)+1;
@@ -95,7 +97,6 @@ class DiscordSnow {
 	}
 	
 	getSettingsPanel() {
-		//TODO: make the month check setting not reset
 		window.saveConfig = function() { 
 			BdApi.saveData('DiscordSnow', 'zIndex', document.getElementById("zIndex").value);
 			z = BdApi.loadData('DiscordSnow', 'zIndex');
@@ -109,12 +110,13 @@ class DiscordSnow {
 			BdApi.saveData('DiscordSnow', 'limitOn', document.getElementById("limitOn").checked);
 			if (date == 11 || BdApi.loadData('DiscordSnow', 'limitOn') == false) { //reset the snow with the new variables
 				snowPls(); 
-			} 
-			//document.getElementById("limitOn").checked = BdApi.loadData('DiscordSnow', 'limitOn');
-		
+			} 	
 		}
 		//this options panel html is absolutely disgusting, this needs to be redone and improved at some point
-		return '<div style="height: 50px;"><div style="width: 300px; float: left;">zIndex of snow (Increase this if snow is falling under some elements)</div><input id="zIndex" max="65535" min="-1" step="1" type="number" value="'+ z +'" /></div><div style="width: 357px; float: left;">Maximum number of snowflakes<input style="float: right;" id="mfConfig" max="65535" min="1" step="1" type="number" value="'+ mf +'" /></div><div style="width: 360px; float: left;">Only snows in December? <input id="limitOn" style="float: right;"  type="checkbox" value="limitOn" checked></div><p><button id="saveButton" style="background-color: var(--bd-blue); color: #fff; float: right;" type="button" onClick="saveConfig(); return false;">Save</button></p>';
-		
+		if (BdApi.loadData('DiscordSnow', 'limitOn') == true) {
+			return '<div style="height: 50px;"><div style="width: 300px; float: left;">zIndex of snow (Increase this if snow is falling under some elements)</div><input id="zIndex" max="65535" min="-1" step="1" type="number" value="'+ z +'" /></div><div style="width: 357px; float: left;">Maximum number of snowflakes<input style="float: right;" id="mfConfig" max="65535" min="1" step="1" type="number" value="'+ mf +'" /></div><div style="width: 360px; float: left;">Only snows in December? <input id="limitOn" style="float: right;"  type="checkbox" value="limitOn" checked></div><p><button id="saveButton" style="background-color: var(--bd-blue); color: #fff; float: right;" type="button" onClick="saveConfig(); return false;">Save</button></p>';
+		} else {
+			return '<div style="height: 50px;"><div style="width: 300px; float: left;">zIndex of snow (Increase this if snow is falling under some elements)</div><input id="zIndex" max="65535" min="-1" step="1" type="number" value="'+ z +'" /></div><div style="width: 357px; float: left;">Maximum number of snowflakes<input style="float: right;" id="mfConfig" max="65535" min="1" step="1" type="number" value="'+ mf +'" /></div><div style="width: 360px; float: left;">Only snows in December? <input id="limitOn" style="float: right;"  type="checkbox" value="limitOn"></div><p><button id="saveButton" style="background-color: var(--bd-blue); color: #fff; float: right;" type="button" onClick="saveConfig(); return false;">Save</button></p>';
+		}
 	}
 }
