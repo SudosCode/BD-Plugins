@@ -75,7 +75,7 @@ class DiscordSnow {
 	getName() { return "DiscordSnow"; }
     getShortName() { return "YaySnow"; }
     getDescription() { return "A plugin that adds javascript snow to your discord window."; }
-    getVersion() { return "1.0.0"; }
+    getVersion() { return "1.1.0"; }
     getAuthor() { return "Sudonim"; }
 	
 	start() {
